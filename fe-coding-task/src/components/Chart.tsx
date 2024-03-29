@@ -39,7 +39,7 @@ export function Chart() {
                     {
                         yAxisKey: 'linearAxis',
                         data: chartData.chartPoints.prices, 
-                        label: 'Price',
+                        label: 'Average price per square',
                         valueFormatter: (value) => `${value} kr`
                     },
                 ]}
