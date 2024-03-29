@@ -1,4 +1,4 @@
-import { BoligType, ChartRequestBody, RowData } from "../interfaces";
+import { ApiRawData, BoligType, ChartRequestBody, RowData } from "../interfaces";
 
 export const buildChartRequestBody = (boligType: string, contentsCode: string, tid: string[], responseFormat: string): ChartRequestBody => {
   const requestBody: ChartRequestBody = {
@@ -58,8 +58,11 @@ const getYear = (qnumber: string): [number, number] => {
 }
 
 
-export const formatChartData = (prices: number[], qarray: string[]): { names: string[]; prices: number[] } => {
-  return { names: qarray, prices };
+export const formatChartData = (chartDataResponse:{data: ApiRawData}): { names: string[]; prices: number[] } => {
+  return {
+    names: Object.keys(chartDataResponse.data.dimension.Tid.category.label),
+    prices: chartDataResponse.data.value
+  }
 }
 
 

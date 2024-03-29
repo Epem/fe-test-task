@@ -35,7 +35,7 @@ export const useChartData = () => {
           dispatch(fetchData())
           const chartDataResponse = await getRawChartData(tempBody);
           if ('error' in chartDataResponse) throw Error(`Error fetching data`)
-          const chartPoints = formatChartData(chartDataResponse.data.value, Object.keys(chartDataResponse.data.dimension.Tid.category.label));
+          const chartPoints = formatChartData(chartDataResponse);
           setChartData({ chartPoints, boligType, startTid, endTid, saved: false });
           dispatch(dataFetched());
         } catch (error) {
