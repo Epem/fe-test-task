@@ -22,8 +22,7 @@ export function Chart() {
     };
     return (
         chartData &&
-        <div className="chart">
-            <h2>Chart for {chartData.boligType} type</h2>
+        <>
             {renderButton()}
             <LineChart
                 width={1200}
@@ -31,10 +30,10 @@ export function Chart() {
                 xAxis={[{ 
                     data: Array.from({ length: chartData.chartPoints.prices.length }, (_, index) => index),
                     dataKey: 'kvartal',
-                    valueFormatter: (value) => `${chartData.chartPoints.names[value]}`
+                    valueFormatter: (value) => `${chartData.chartPoints.names[value] || ''}`
                  }]}
                 yAxis={[
-                    { id: 'linearAxis', scaleType: 'linear' },
+                    { id: 'linearAxis', scaleType: 'linear', valueFormatter: (_value) => `${_value}` },
                 ]}
                 series={[
                     {
@@ -44,7 +43,7 @@ export function Chart() {
                         valueFormatter: (value) => `${value} kr`
                     },
                 ]}
-                margin={{ top: 5, right: 20, bottom: 5, left: 0 }} />
-        </div>
+                margin={{ top: 20, right: 20, bottom: 20, left: 60 }} />
+        </>
     )
 }
