@@ -58,7 +58,7 @@ const getYear = (qnumber: string): [number, number] => {
 }
 
 
-export const getQarterPrice = (prices: number[], qarray: string[]): { names: string[]; prices: number[] } => {
+export const formatChartData = (prices: number[], qarray: string[]): { names: string[]; prices: number[] } => {
   return { names: qarray, prices };
 }
 
