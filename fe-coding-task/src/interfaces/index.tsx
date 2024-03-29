@@ -35,7 +35,7 @@ export interface RowData {
         prices: number[]
     },
     boligType: string,
-    saved:false
+    saved:boolean
 }
 
 export interface FormValues extends FieldValues {
