@@ -19,7 +19,7 @@ export const DataTable = () => {
             <TableRow>
               <TableCell>Quarters</TableCell>
               <TableCell>Bolig Type</TableCell>
-              <TableCell>Control</TableCell>
+              <TableCell align='right'>Control</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -27,7 +27,7 @@ export const DataTable = () => {
               <TableRow key={index}>
                 <TableCell>{row.startTid} - {row.endTid}</TableCell>
                 <TableCell>{row.boligType}</TableCell>
-                <TableCell>
+                <TableCell align='right'>
                   <Button onClick={() => handleClick(row)}>
                     Show local data
                   </Button>
