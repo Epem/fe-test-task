@@ -1,0 +1,130 @@
+import { BoligType, ChartRequestBody, RowData } from "../interfaces";
+
+export const buildChartRequestBody = (boligType: string, contentsCode: string, tid: string[], responseFormat: string): ChartRequestBody => {
+    const requestBody: ChartRequestBody = {
+      query: [
+        {
+          code: 'Boligtype',
+          selection: {
+            filter: 'item',
+            values: [boligType]
+          }
+        },
+        {
+          code: 'ContentsCode',
+          selection: {
+            filter: 'item',
+            values: [contentsCode]
+          }
+        },
+        {
+          code: 'Tid',
+          selection: {
+            filter: 'item',
+            values: tid
+          }
+        }
+      ],
+      response: {
+        format: responseFormat
+      }
+    };
+  
+    return requestBody;
+}
+
+
+
+export const getTidArray = (startTid: string, endTid: string): string[] => {
+  const tIds: string[] = [];
+  const [startYear, startNumber] = getYear(startTid);
+  const [endYear, endNumber] = getYear(endTid);
+
+  for (let year = startYear; year <= endYear; year++) {
+    const start = year === startYear ? startNumber : 1;
+    const end = year === endYear ? endNumber : 4;
+    for (let qnumber = start; qnumber <= end; qnumber++) {
+      tIds.push(`${year}K${qnumber}`);
+    }
+  }
+  return tIds;
+}
+
+const getYear = (qnumber: string): [number, number] => {
+  const [yearStr, quarterStr] = qnumber.split("K");
+  const year = parseInt(yearStr);
+  const quarterNumber = parseInt(quarterStr);
+  return [year, quarterNumber];
+}
+
+
+export const getQarterPrice = (prices: number[], qarray: string[]): { names: string[]; prices: number[] } => {
+  return { names : qarray, prices };
+}
+
+
+export const getStorage = () => (JSON.parse(localStorage.getItem('statistics') || '[]'))
+
+
+export const getBoligTypeValue = (boligType: string): string=> {
+  switch (boligType) {
+    case BoligType.All:
+      return '00';
+    case BoligType.SmallHouse:
+      return '02';
+    case BoligType.ApartmentBlocks:
+      return '03';
+    default:
+      return '00';
+  }
+};
+
+export const qCountFn = ():number => {
+  const today = new Date(); 
+  const year = today.getFullYear();
+  const q = Math.ceil((today.getMonth() + 1)/3)
+  return (year - 2009) * 4 + q - 1 - 1;
+}
+
+export const getDateFromNumber = (quarter:number):string => {
+  const year = Math.floor(quarter / 4) + 2009;
+  const q = quarter % 4 + 1;
+  return `${year}K${q}`;
+}
+
+export const getNumberFromDate = (dateString: string): number => {
+  if (!dateString) return -1;
+  const [yearStr, qStr] = dateString.split('K');
+
+  if (!yearStr || !qStr) {
+    return -1;
+  }
+
+  const year = parseInt(yearStr, 10);
+  const quarter = parseInt(qStr, 10);
+
+  if (isNaN(year) || isNaN(quarter)) {
+    return -1;
+  }
+
+  const calculatedQuarter = (year - 2009) * 4 + quarter - 1;
+
+  return calculatedQuarter;
+};
+
+export const generateQList = (maxQ:number) =>  {
+  const qList = [];
+  let currentQ = 0;
+  while (maxQ - currentQ > 10) {
+    qList.push({ value: currentQ, label: getDateFromNumber(currentQ) });
+    currentQ += 10;
+  }
+  qList.push({ value: maxQ, label: getDateFromNumber(maxQ) });
+  return qList;
+}
+
+export const findChart = (startTid: string, endTid: string, boligType: string, localstorage: RowData[]) =>  localstorage.find((row: RowData) =>
+row.startTid === startTid &&
+row.endTid === endTid &&
+row.boligType === boligType
+)
