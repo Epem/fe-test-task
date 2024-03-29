@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { RootState, RowData } from '../interfaces';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import { findChart, getBoligTypeValue, getQarterPrice, getTidArray } from '../utils';
+import { findChart, getBoligTypeValue, formatChartData, getTidArray } from '../utils';
 import { useGetChartDataMutation } from '../state/api';
 import { dataFetched, fetchData, handleError } from '../state';
 
@@ -35,7 +35,7 @@ export const useChartData = () => {
           dispatch(fetchData())
           const chartDataResponse = await getRawChartData(tempBody);
           if ('error' in chartDataResponse) throw Error(`Error fetching data`)
-          const chartPoints = getQarterPrice(chartDataResponse.data.value, tidArray);
+          const chartPoints = formatChartData(chartDataResponse.data.value, Object.keys(chartDataResponse.data.dimension.Tid.category.label));
           setChartData({ chartPoints, boligType, startTid, endTid, saved: false });
           dispatch(dataFetched());
         } catch (error) {
