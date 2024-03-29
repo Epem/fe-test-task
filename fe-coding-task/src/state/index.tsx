@@ -2,7 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { BoligType, FormValues, RowData, StateInterface } from "../interfaces";
 import { getDateFromNumber, qCountFn } from "../utils";
 
-const appParams = Object.fromEntries(  
+const appParams = Object.fromEntries(
   new URLSearchParams(window.location.search)
 )
 
@@ -75,10 +75,26 @@ export const globalSlice = createSlice({
     resetError: (state) => {
       state.fail = false;
       state.errorMessage = '';
+    },
+    dataFetched: (state) => {
+      state.chartLoading = true;
+      state.dataFetching = false;
     }
   }
 })
 
-export const { setTid, setBoligtype, setChartLoading, setDataFetching, setFormData, setFromCache, saveToLocalStorage, handleError, resetError } = globalSlice.actions;
+export const {
+  setTid,
+  setBoligtype,
+  setChartLoading,
+  setDataFetching,
+  setFormData,
+  setFromCache,
+  saveToLocalStorage,
+  handleError,
+  resetError,
+  fetchData,
+  dataFetched
+ } = globalSlice.actions;
 
 export default globalSlice.reducer;

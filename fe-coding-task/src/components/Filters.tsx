@@ -40,7 +40,7 @@ export function Filters() {
           </Grid>
         </Grid>
       </Toolbar>
-      <Button onClick={handleSubmit(onSubmit)}>Generate chart</Button>
+      {!isDataLoading && isChartLoaded && <Button onClick={handleSubmit(onSubmit)}>Generate chart</Button>}
       {isDataLoading && !isChartLoaded && <CircularProgress />}
     </>
   )
