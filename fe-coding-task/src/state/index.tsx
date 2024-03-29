@@ -1,15 +1,15 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { FormValues, RowData, StateInterface } from "../interfaces";
-import { getDateFromNumber } from "../utils";
+import { BoligType, FormValues, RowData, StateInterface } from "../interfaces";
+import { getDateFromNumber, qCountFn } from "../utils";
 
 const appParams = Object.fromEntries(  
   new URLSearchParams(window.location.search)
 )
 
 const initialState: StateInterface = {
-  startTid: '',
-  endTid: '',
-  boligType: '',
+  startTid: getDateFromNumber(0),
+  endTid: getDateFromNumber(qCountFn()),
+  boligType: BoligType.All,
   contentsCode: 'KvPris',
   responseFormat: 'json-stat2',
   dataFetching: false,
