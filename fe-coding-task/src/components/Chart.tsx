@@ -20,7 +20,6 @@ export function Chart() {
     const handleImportClick = () => {
         chartData && dispatch(saveToLocalStorage(chartData))
     };
-    console.log(chartData)
     return (
         chartData &&
         <div className="chart">

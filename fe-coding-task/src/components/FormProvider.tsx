@@ -22,7 +22,6 @@ export function FiltersForm({ children }: Props) {
     });
     setSearchParams(queryParams);
   }, [setSearchParams, startTid, endTid, boligType]);
-  console.log({startTid, endTid, boligType})
   const methods = useForm<FormValues>({
     defaultValues: { boligType: boligType, tIds: [getNumberFromDate(startTid), getNumberFromDate(endTid)] }
   });
