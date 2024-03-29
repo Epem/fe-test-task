@@ -37,9 +37,10 @@ export const useChartData = () => {
           if ('error' in chartDataResponse) throw Error(`Error fetching data`)
           const chartPoints = getQarterPrice(chartDataResponse.data.value, tidArray);
           setChartData({ chartPoints, boligType, startTid, endTid, saved: false });
-          dispatch(dataFetched())
+          dispatch(dataFetched());
         } catch (error) {
           dispatch(handleError());
+          dispatch(dataFetched());
         }
       }
       getChartData(startTid, endTid, boligType);
