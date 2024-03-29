@@ -14,7 +14,9 @@ const initialState: StateInterface = {
   responseFormat: 'json-stat2',
   dataFetching: false,
   chartLoading: true,
-  localstorage: JSON.parse(localStorage.getItem('storage-item') || '[]')
+  localstorage: JSON.parse(localStorage.getItem('storage-item') || '[]'),
+  fail: false,
+  errorMessage: ''
 };
 
 if ('startTid' in appParams && 'endTid' in appParams && 'boligType' in appParams) {
@@ -64,11 +66,19 @@ export const globalSlice = createSlice({
     saveToLocalStorage: (state, action: PayloadAction<RowData>) => {
       action.payload.saved = true;
       state.localstorage.push(action.payload)
-      localStorage.setItem('storage-item', JSON.stringify(state.localstorage))
+      localStorage.setItem('storage-item', JSON.stringify(state.localstorage));
+    },
+    handleError: (state) => {
+      state.fail = true;
+      state.errorMessage = 'Fetching error';
+    },
+    resetError: (state) => {
+      state.fail = false;
+      state.errorMessage = '';
     }
   }
 })
 
-export const { setTid, setBoligtype, setChartLoading, setDataFetching, setFormData, setFromCache, saveToLocalStorage } = globalSlice.actions;
+export const { setTid, setBoligtype, setChartLoading, setDataFetching, setFormData, setFromCache, saveToLocalStorage, handleError, resetError } = globalSlice.actions;
 
 export default globalSlice.reducer;

@@ -53,6 +53,8 @@ export interface StateInterface {
     dataFetching: boolean;
     localstorage: RowData[]; 
     chartLoading: boolean;
+    fail: boolean;
+    errorMessage: string;
   }
 
 

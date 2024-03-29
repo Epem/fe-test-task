@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react';
 import { RootState, RowData } from '../interfaces';
-import { TypedUseSelectorHook, useSelector } from 'react-redux';
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { findChart, getBoligTypeValue, getQarterPrice, getTidArray } from '../utils';
 import { useGetChartDataMutation } from '../state/api';
+import { handleError } from '../state';
 
 export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export const  useChartData = () => {
+  const dispatch = useDispatch();
   const [chartData, setChartData] = useState<RowData | null>(null);
   const { localstorage, startTid, endTid, boligType, contentsCode, responseFormat  } = useTypedSelector((state) => state.global);
   const [getRawChartData] = useGetChartDataMutation()
@@ -34,12 +36,12 @@ export const  useChartData = () => {
           const chartPoints = getQarterPrice(chartDataResponse.data.value, tidArray);
           setChartData({ chartPoints, boligType, startTid, endTid, saved: false });
         } catch (error) {
-          console.log(error);
+          dispatch(handleError());
         }
       }
     };
     getChartData(startTid, endTid, boligType );
-  }, [localstorage, getRawChartData, startTid, endTid, boligType, contentsCode, responseFormat]);
+  }, [localstorage, dispatch, getRawChartData, startTid, endTid, boligType, contentsCode, responseFormat]);
 
   return [chartData]
 }
