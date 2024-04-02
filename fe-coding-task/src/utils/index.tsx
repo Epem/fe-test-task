@@ -86,7 +86,7 @@ export const qCountFn = (): number => {
   const today = new Date();
   const year = today.getFullYear();
   const q = Math.ceil((today.getMonth() + 1) / 3)
-  return (year - 2009) * 4 + q - 1 - 1;
+  return (year - 2009) * 4 + q - 3;
 }
 
 export const getDateFromNumber = (quarter: number): string => {
