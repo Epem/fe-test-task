@@ -117,10 +117,11 @@ export const getNumberFromDate = (dateString: string): number => {
 
 export const generateQList = (maxQ: number) => {
   const qList = [];
+  const step = Math.round(maxQ / 6);
   let currentQ = 0;
-  while (maxQ - currentQ > 5) {
+  while (maxQ - currentQ > Math.round(step/2)) {
     qList.push({ value: currentQ, label: getDateFromNumber(currentQ) });
-    currentQ += 10;
+    currentQ += step;
   }
   qList.push({ value: maxQ, label: getDateFromNumber(maxQ) });
   return qList;
