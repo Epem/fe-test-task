@@ -118,7 +118,7 @@ export const getNumberFromDate = (dateString: string): number => {
 export const generateQList = (maxQ: number) => {
   const qList = [];
   let currentQ = 0;
-  while (maxQ - currentQ > 10) {
+  while (maxQ - currentQ > 5) {
     qList.push({ value: currentQ, label: getDateFromNumber(currentQ) });
     currentQ += 10;
   }
