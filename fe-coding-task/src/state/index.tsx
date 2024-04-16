@@ -9,7 +9,7 @@ const appParams = Object.fromEntries(
 const initialState: StateInterface = {
   startTid: getDateFromNumber(0),
   endTid: getDateFromNumber(qCountFn()),
-  boligType: BoligType.All,
+  boligType: [BoligType.All, BoligType.SmallHouse],
   contentsCode: 'KvPris',
   responseFormat: 'json-stat2',
   dataFetching: false,
@@ -22,8 +22,10 @@ const initialState: StateInterface = {
 if ('startTid' in appParams && 'endTid' in appParams && 'boligType' in appParams) {
   initialState.startTid = appParams.startTid
   initialState.endTid = appParams.endTid
-  initialState.boligType = appParams.boligType
+  initialState.boligType = appParams.boligType.split(',')
 }
+
+console.log(initialState)
 
 export const globalSlice = createSlice({
   name: "global",
@@ -34,7 +36,7 @@ export const globalSlice = createSlice({
       state.startTid = getDateFromNumber(startTid);
       state.endTid = getDateFromNumber(endTid);
     },
-    setBoligtype: (state, action: PayloadAction<{ boligType: string; }>) => {
+    setBoligtype: (state, action: PayloadAction<{ boligType: string[]; }>) => {
       const { boligType } = action.payload;
       state.boligType = boligType;
     },
@@ -56,7 +58,7 @@ export const globalSlice = createSlice({
       const { startTid, endTid, boligType } = action.payload;
       state.startTid = startTid;
       state.endTid = endTid;
-      state.boligType = boligType;
+      state.boligType = [boligType, boligType];
     },
     fetchData: (state) => {
       if (state.dataFetching) return;

@@ -1,13 +1,13 @@
 import { ApiRawData, BoligType, ChartRequestBody, RowData } from "../interfaces";
 
-export const buildChartRequestBody = (boligType: string, contentsCode: string, tid: string[], responseFormat: string): ChartRequestBody => {
+export const buildChartRequestBody = (boligType: string[], contentsCode: string, tid: string[], responseFormat: string): ChartRequestBody => {
   const requestBody: ChartRequestBody = {
     query: [
       {
         code: 'Boligtype',
         selection: {
           filter: 'item',
-          values: [boligType]
+          values: boligType
         }
       },
       {
@@ -130,5 +130,5 @@ export const generateQList = (maxQ: number) => {
 export const findChart = (startTid: string, endTid: string, boligType: string, localstorage: RowData[]) => localstorage.find((row: RowData) =>
   row.startTid === startTid &&
   row.endTid === endTid &&
-  row.boligType === boligType
+  row.boligType[0] === boligType
 )

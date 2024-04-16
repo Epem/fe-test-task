@@ -14,11 +14,11 @@ export function FiltersForm({ children }: Props) {
   const [, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    if (!startTid && !endTid && !boligType) return
+    if (!startTid && !endTid && !boligType[0] && !boligType[1]) return
     const queryParams = new URLSearchParams({
       startTid,
       endTid,
-      boligType,
+      boligType: boligType.join(','),
     });
     setSearchParams(queryParams);
   }, [setSearchParams, startTid, endTid, boligType]);
