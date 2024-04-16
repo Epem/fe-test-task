@@ -9,6 +9,8 @@ export const HouseSelector: React.FC = () => {
   const [values, setValues] = useState<string[]>(getValues('boligType'))
   const onChange = (selectorId: number)=> (event: ChangeEvent<HTMLSelectElement>) => {
     const array = [...values]
+    const secondSelector = selectorId === 0 ? array[1] : array[0]
+    if (event.target.value === secondSelector) return 
     array[selectorId] = event.target.value
     setValues(array)
     setValue('boligType', array)
