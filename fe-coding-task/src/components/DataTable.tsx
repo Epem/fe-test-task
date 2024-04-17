@@ -26,7 +26,7 @@ export const DataTable = () => {
             {savedData.map((row: RowData, index: number) => (
               <TableRow key={index}>
                 <TableCell>{row.startTid} - {row.endTid}</TableCell>
-                <TableCell>{row.boligType}</TableCell>
+                <TableCell>{row.boligType.join(', ')}</TableCell>
                 <TableCell align='right'>
                   <Button onClick={() => handleClick(row)}>
                     Show local data
