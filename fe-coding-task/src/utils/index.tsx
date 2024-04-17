@@ -129,8 +129,7 @@ export const generateQList = (maxQ: number) => {
 
 export const findChart = (startTid: string, endTid: string, boligType: string, localstorage: RowData[]) => localstorage.find((row: RowData) =>
   row.startTid === startTid &&
-  row.endTid === endTid &&
-  row.boligType[0] === boligType
+  row.endTid === endTid && JSON.stringify(row.boligType) === JSON.stringify(boligType)
 )
 
 
