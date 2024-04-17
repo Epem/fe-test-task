@@ -81,7 +81,7 @@ export interface ApiRawData {
 }
 
 export interface ApiRequestData {
-    boligType: string,
+    boligType: string[],
     contentsCode: string,
     tid: string[],
     responseFormat: string
@@ -109,12 +109,12 @@ export interface RowData {
         names: string[],
         prices: number[]
     },
-    boligType: string,
+    boligType: string[],
     saved:boolean
 }
 
 export interface FormValues extends FieldValues {
-    boligType: string;
+    boligType: string[];
     tIds: number[];
 }
 
@@ -122,7 +122,7 @@ export interface FormValues extends FieldValues {
 export interface StateInterface {
     startTid: string;
     endTid: string;
-    boligType: string;
+    boligType: string[];
     contentsCode: string;
     responseFormat: string;
     dataFetching: boolean;

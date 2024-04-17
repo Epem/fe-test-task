@@ -1,24 +1,23 @@
-import { NativeSelect } from '@mui/material';
-import { ChangeEvent } from 'react';
+import { Select } from '@mui/material';
 import { useFormContext } from 'react-hook-form';
 import { BoligType, FormValues } from '../../interfaces';
 const boligTypes = Object.values(BoligType);
 
-export const HouseSelector: React.FC =  () => {
-  const { register, setValue } = useFormContext<FormValues>()
-  const onChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    setValue('boligType', event.target.value)
-  }
+export const HouseSelector: React.FC = () => {
+  const { register } = useFormContext<FormValues>()
   return (
-    <NativeSelect
-      {...register('boligType')}
-      onChange={onChange}
-    >
+    <>
+      <Select<string[]>
+        {...register('boligType')}
+        multiple
+        native
+      >
         {boligTypes.map((type) => (
-        <option key={type} value={type}>
-          {type}
-        </option>
-      ))}
-    </NativeSelect>
+          <option key={type} value={type}>
+            {type}
+          </option>
+        ))}
+      </Select>
+    </>
   )
 }

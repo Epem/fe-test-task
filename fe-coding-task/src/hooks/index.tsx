@@ -15,16 +15,16 @@ export const useChartData = () => {
 
   useEffect(() => {
     if (startTid && endTid && boligType) {
-      const localChartData = findChart(startTid, endTid, boligType, localstorage)
+      const localChartData = findChart(startTid, endTid, boligType[0], localstorage)
       if (localChartData) {
         const { chartPoints, saved } = localChartData
         setChartData({ chartPoints, boligType, startTid, endTid, saved });
         return;
       }
-      const getChartData = async (startTid: string, endTid: string, boligType: string): Promise<void> => {
+      const getChartData = async (startTid: string, endTid: string, boligType: string[]): Promise<void> => {
 
         const tidArray = getTidArray(startTid, endTid);
-        const boligTypeValue = getBoligTypeValue(boligType);
+        const boligTypeValue = boligType.map((value)=>getBoligTypeValue(value))
         const tempBody = {
           boligType: boligTypeValue,
           contentsCode,
