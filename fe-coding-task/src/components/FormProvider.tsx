@@ -14,7 +14,7 @@ export function FiltersForm({ children }: Props) {
   const [, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    if (!startTid && !endTid && !boligType[0] && !boligType[1]) return
+    if (!startTid || !endTid || !boligType.length) return
     const queryParams = new URLSearchParams({
       startTid,
       endTid,

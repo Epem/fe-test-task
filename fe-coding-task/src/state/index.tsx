@@ -2,9 +2,34 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { BoligType, FormValues, RowData, StateInterface } from "../interfaces";
 import { getDateFromNumber, qCountFn } from "../utils";
 
+
+
 const appParams = Object.fromEntries(
   new URLSearchParams(window.location.search)
 )
+
+
+const appStorageVersion = '2.0.0';
+const localStorageVersion = localStorage.getItem('storage-version');
+
+if (localStorageVersion !== appStorageVersion) {
+  console.log('Found ancient version of storage, migrating....')
+  const migrationData = JSON.parse(localStorage.getItem('storage-item') || '[]')
+    .map((item: RowData) => {
+      const { startTid, endTid, boligType, chartPoints, saved } = item;
+      return {
+        startTid,
+        endTid,
+        boligType: typeof boligType === 'string' ? [boligType] : boligType,
+        chartPoints,
+        saved
+      };
+    });
+
+  localStorage.setItem('storage-item', JSON.stringify(migrationData));
+  localStorage.setItem('storage-version', appStorageVersion);
+  console.log('Migration done! To version', appStorageVersion)
+}
 
 const initialState: StateInterface = {
   startTid: getDateFromNumber(0),
@@ -97,6 +122,6 @@ export const {
   resetError,
   fetchData,
   dataFetched
- } = globalSlice.actions;
+} = globalSlice.actions;
 
 export default globalSlice.reducer;
