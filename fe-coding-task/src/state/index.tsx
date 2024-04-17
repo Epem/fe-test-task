@@ -9,7 +9,7 @@ const appParams = Object.fromEntries(
 const initialState: StateInterface = {
   startTid: getDateFromNumber(0),
   endTid: getDateFromNumber(qCountFn()),
-  boligType: [BoligType.All, BoligType.SmallHouse],
+  boligType: [BoligType.All],
   contentsCode: 'KvPris',
   responseFormat: 'json-stat2',
   dataFetching: false,
@@ -58,7 +58,7 @@ export const globalSlice = createSlice({
       const { startTid, endTid, boligType } = action.payload;
       state.startTid = startTid;
       state.endTid = endTid;
-      state.boligType = [boligType, boligType];
+      state.boligType = boligType;
     },
     fetchData: (state) => {
       if (state.dataFetching) return;
