@@ -18,13 +18,13 @@ export const useChartData = () => {
       const localChartData = findChart(startTid, endTid, boligType[0], localstorage)
       if (localChartData) {
         const { chartPoints, saved } = localChartData
-        setChartData({ chartPoints, boligType: boligType[0], startTid, endTid, saved });
+        setChartData({ chartPoints, boligType, startTid, endTid, saved });
         return;
       }
       const getChartData = async (startTid: string, endTid: string, boligType: string[]): Promise<void> => {
 
         const tidArray = getTidArray(startTid, endTid);
-        const boligTypeValue = [getBoligTypeValue(boligType[0]), getBoligTypeValue(boligType[1])];
+        const boligTypeValue = boligType.map((value)=>getBoligTypeValue(value))
         const tempBody = {
           boligType: boligTypeValue,
           contentsCode,
@@ -36,7 +36,7 @@ export const useChartData = () => {
           const chartDataResponse = await getRawChartData(tempBody);
           if ('error' in chartDataResponse) throw Error(`Error fetching data`)
           const chartPoints = formatChartData(chartDataResponse);
-          setChartData({ chartPoints, boligType: boligType[0], startTid, endTid, saved: false });
+          setChartData({ chartPoints, boligType, startTid, endTid, saved: false });
           dispatch(dataFetched());
         } catch (error) {
           dispatch(handleError());

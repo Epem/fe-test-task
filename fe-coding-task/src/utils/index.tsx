@@ -132,3 +132,11 @@ export const findChart = (startTid: string, endTid: string, boligType: string, l
   row.endTid === endTid &&
   row.boligType[0] === boligType
 )
+
+
+export const splitIntoChunks = (array: number[], chunksCount: number) => {
+  const chunkSize = Math.ceil(array.length / chunksCount);
+  return Array.from({ length: chunksCount }, (_, index) =>
+      array.slice(index * chunkSize, index * chunkSize + chunkSize)
+  );
+}

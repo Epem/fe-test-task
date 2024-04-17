@@ -109,7 +109,7 @@ export interface RowData {
         names: string[],
         prices: number[]
     },
-    boligType: string,
+    boligType: string[],
     saved:boolean
 }
 
